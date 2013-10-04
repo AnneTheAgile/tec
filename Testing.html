@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Testing &mdash; tec 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="tec 0.3.0 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">tec 0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="testing">
+<h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<p>There are two categories of tests included in the <a href="#id1"><span class="problematic" id="id2">:module:`tec`</span></a> package: API tests and numerical tests. API tests are the usual tests one would find with any python package. Since the <a href="#id3"><span class="problematic" id="id4">:module:`tec`</span></a> package performs numerical simulations of a thermionic engine, tests which verify the numerical accuracy of the results are also included. API unit tests and unit tests for numerical accuracy can be found in the test directory. Code and standard data comprising the numerical test suite can be found in test/numerics.</p>
+<div class="section" id="numerical-testing">
+<h2>Numerical testing<a class="headerlink" href="#numerical-testing" title="Permalink to this headline">¶</a></h2>
+<p>Numerical tests evaluate the accuracy of the output of methods that return a quantitative value and provide assurance that calculations are being performed properly. The strategy for numerical testing is to evaluate the result of a calculator method against a known standard value and ensure the two values match to within an acceptable uncertainty.</p>
+<p>This entire testing strategy is based on the assumption that the computer can accurately and repeatably perform simple calculations. I assume that as far as the computer is concerned, the product</p>
+<blockquote>
+<div>2 * 5</div></blockquote>
+<p>is just as easy to calculate as the product</p>
+<blockquote>
+<div>2.333690544228055 * 5.44073192976832565</div></blockquote>
+<p>and the result is just as accurate. Most of the calculator methods in the <a href="#id5"><span class="problematic" id="id6">:module:`tec`</span></a> package are straightforward arithmetical operations, and the important task is to analyze the uncertainty propagation.</p>
+<p>For every calculator method there is a tremendous number of combinations of input paramters. The problem isn&#8217;t that it would take an unacceptably long time with unacceptably large computing resources to exhaustively calculate all of those combinations. The problem is that there&#8217;s no reasonable way to check the resulting set of data.</p>
+<p>Since checking a comprehensive standard set of data is unreasonable, the next approach would be to have a much smaller set of standard data which is a subset of the comprehensive set of standard data. The question now becomes: how small does the subset need to be? If the subset gets too big, the problem of reasonably checking all the values re-emerges.</p>
+<p>Since we&#8217;ve already assumed that the computer accurately and repeatably calculates simple arithmatic operations, the subset of standard data can be quite small. Given that the human element is the limiting factor in terms of ease of performing a numerical calculation,  it is best to choose special case parameters so that humans can quickly spot-check all of the standard data.</p>
+<p>The foundation of this testing strategy is to check the uncertainty propagation of each algorithm to get a picture of the uncertainty of compound algorithms. The strategy of checking algorithms is much better than slavishly checking sets of standard data.</p>
+<p>The typical strategy to test a calculator method has the following components. First, the uncertainty of the algorithm implemented by the calculator method is analyzed using uncertainty propagation theory <a href="#id7"><span class="problematic" id="id8">:cite:`978-0-935702-42-2`</span></a>. This analysis will appear in the docstring of the unit test which performs the numerical of that calculator method. Code will be written that generates easily checked-by-humans data. This code is used to generate the standard set of data for the calculator method. The standard set of data is generated over a range of input values which are reasonable (i.e. temp will never approach 1e9K). The numerical accuracy unit test for the calculator method under test will compare the output of the calculator method to the (verified) output of the standard data. Each calculator method will usually only have one numerical accuracy unit test.</p>
+<p>Each calculator method requires the following items in order to be considered to be fully tested.</p>
+<ul class="simple">
+<li>A unit listed in its docstring.</li>
+<li>A value of uncertainty listed in its docstring.</li>
+<li>An analysis of the method&#8217;s uncertainty documented in that method&#8217;s test&#8217;s docstring.</li>
+<li>A standard set of data, typically a set of special cases; file naming convention: Class.method_name_STANDARD.dat</li>
+<li>A script that generates the standard data; file naming convention: Class.method_name_STANDARD.py</li>
+<li>A unit test that tests the method against the standard data.</li>
+<li>Additional unit tests that test any other special, edge, or corner cases.</li>
+</ul>
+<p>Distinguishment between classification of various cases is important in this discussion. &#8220;Special case&#8221; refers to a case that gives a mathematically unique result, specifically an integer power of 10 within the precision of the calculation. For example, some combination of parameters may yield an output current density of precisely 10 A cm^{-2}. &#8220;Edge case&#8221; refers to the situation where one parameter is pushed to its limit. &#8220;Corner case&#8221; refers to the situation where more than one parameter is at an extreme but allowed value and where errors might occur.</p>
+<div class="section" id="uncertainty-analysis-uncertainty-quantification-and-units">
+<h3>Uncertainty analysis, uncertainty quantification, and units<a class="headerlink" href="#uncertainty-analysis-uncertainty-quantification-and-units" title="Permalink to this headline">¶</a></h3>
+<p>The majority of the calculator methods in the tec package are straightforward mathematical operations like multiplication, division, addition, subtraction, and things like exp(). These calculator methods can be thought of as very simple algorithms; they are just a one-line calculation. I can very easily evaluate the uncertainty propagation through these calculators and determine what it means to pass these tests. Subclasses of the TEC class will generally only overload methods related to calculating the motive, not methods that calculate the output current density, output voltage, etc. Uncertainty in the motive calculation algorithm will typically enter these other methods as a single value. The result is that the output of the non-motive calculators may be numerically inaccurate, but the calculator algorithm is still returning values that are acceptably precise. In other words, the simple calculator methods may be precisely calculating the wrong answer.</p>
+<p>The point is that I can write numerical tests for all of the methods in the base TEC class. If the simple calculators pass the tests, I can rest assured that changing  the motive calculator won&#8217;t affect the precision of these simple calculator methods. Therefore, child classes only require evaluation and testing of the method used to calculate the motive, not any simple calculator method.</p>
+<p>In the calculator methods there are three sources of uncertainty. One, the machine isn&#8217;t perfectly precise: I&#8217;m pretty sure that all the numbers are kept to double precision. In other words, the machine can only approximate irrational numbers like pi and sqrt(2). Therefore, the machine propagates uncertainty through calculations and any number which is a result of a calculation has some uncertainty.</p>
+<p>In the case of parameters I use as inputs (e.g. emitter temperature or collector voltage) I assume the number has machine precision regardless of the number of decimals I specify. Assuming there are 15 decimals worth of precision, if I specify the emitter barrier height as</p>
+<blockquote>
+<div>1.4</div></blockquote>
+<p>I am effectively saying it is</p>
+<blockquote>
+<div>1.40000000000000</div></blockquote>
+<p>This construction is a little silly, but it is what I am doing.</p>
+<p>The second source of error are the values of the physical constants I use. I will use the most precise values I can find, but these values are always reported to a certain precision with a particular uncertainty. I believe this precision is less than the machine precision and therefore will be the predominant source of uncertainty in a value returned by a calculator method.</p>
+<p>One final source of uncertainty, related to the uncertainty of physical constants, arises from the conversion of units. Converting cm^2 into m^2 doesn&#8217;t change the relative uncertainty because there is an absolutely precise relationship between cm and m. In fact, Taylor mentions such a convention on p. 54. Converting other units like eV to J comes with an uncertainty because the conversion factor isn&#8217;t absolutely precise &#8211; in this case it is the value of the fundamental charge. The uncertainty of unit conversion of object data is noted in the docstring of the class.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Testing</a><ul>
+<li><a class="reference internal" href="#numerical-testing">Numerical testing</a><ul>
+<li><a class="reference internal" href="#uncertainty-analysis-uncertainty-quantification-and-units">Uncertainty analysis, uncertainty quantification, and units</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Testing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">tec 0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Joshua Ryan Smith.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

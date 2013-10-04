@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Testing numerical accuracy of models &mdash; tec 0.3.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="tec 0.3.0 documentation" href="index.html" />
+    <link rel="prev" title="Models (tec.models)" href="models.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Models (tec.models)"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">tec 0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-test_electrode_method">
+<span id="testing-numerical-accuracy-of-models"></span><h1>Testing numerical accuracy of models<a class="headerlink" href="#module-test_electrode_method" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="electrode">
+<h2>Electrode<a class="headerlink" href="#electrode" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="test_electrode_method.MethodsSpecialCase">
+<em class="property">class </em><tt class="descclassname">test_electrode_method.</tt><tt class="descname">MethodsSpecialCase</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#test_electrode_method.MethodsSpecialCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests the special cases of the methods.</p>
+<dl class="method">
+<dt id="test_electrode_method.MethodsSpecialCase.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#test_electrode_method.MethodsSpecialCase.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a dictionary that can properly instantiate an Electrode object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_electrode_method.MethodsSpecialCase.test_output_current_zero_richardson">
+<tt class="descname">test_output_current_zero_richardson</tt><big>(</big><big>)</big><a class="headerlink" href="#test_electrode_method.MethodsSpecialCase.test_output_current_zero_richardson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set richardson=0 and verify calc_saturation_current() returns value of 0.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_electrode_method.MethodsSpecialCase.test_output_current_zero_temp">
+<tt class="descname">test_output_current_zero_temp</tt><big>(</big><big>)</big><a class="headerlink" href="#test_electrode_method.MethodsSpecialCase.test_output_current_zero_temp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set temp=0 and verify calc_saturation_current() returns value of 0.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="test_electrode_method.MethodsValues">
+<em class="property">class </em><tt class="descclassname">test_electrode_method.</tt><tt class="descname">MethodsValues</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#test_electrode_method.MethodsValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests the output of the methods match some expected values.</p>
+<dl class="method">
+<dt id="test_electrode_method.MethodsValues.setUp">
+<tt class="descname">setUp</tt><big>(</big><big>)</big><a class="headerlink" href="#test_electrode_method.MethodsValues.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a dictionary that can properly instantiate an Electrode object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_electrode_method.MethodsValues.test_calc_saturation_current_values">
+<tt class="descname">test_calc_saturation_current_values</tt><big>(</big><big>)</big><a class="headerlink" href="#test_electrode_method.MethodsValues.test_calc_saturation_current_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saturation current values test.</p>
+<p>This method follows the numerical testing strategy as laid out in the README 
+document. The script</p>
+<blockquote>
+<div>Electrode.calc_saturation_current_STANDARD.py</div></blockquote>
+<p>was used to generate the standard data which can be found in the 
+corresponding .dat file.</p>
+<p>The uncertainty of this method is ~1e-5.</p>
+<p>The return value of this method is given by the Richardson Dushman equation. 
+According to Taylor (ISBN: 978-0-935702-42-2) p. 75, the uncertainty of the 
+value of the output current density is</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>δJ/J = ( (δA/A)**2 + 2*(δT/T)**2 + </dt>
+<dd>exp(-2ϕ/kT)((δT/T)**2 + (δϕ/ϕ)**2 + (δk/k)**2) )**(1/2)        (1)</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>Where</dt>
+<dd>J: output current density
+A: Richardson&#8217;s constant
+T: temperature
+ϕ: barrier height
+k: Boltzmann&#8217;s constant</dd>
+</dl>
+<p>The uncertainty of the output current depends on the uncertainties of the 
+quantities listed above. I assume that the Richardson&#8217;s constant, 
+temperature, and barrier height all have machine precision. According to 
+NIST [1], Boltzmann&#8217;s constant has a precision of ~1e-6 which I interpret as 
+I can believe the values of numerals up to and including 1e-5 places behind 
+the decimal in scientific notation.</p>
+<p>The Eq. 1 above breaks down into two parts: the sum of the first two terms, 
+and the product of the exponentiation. The uncertainty of the output current 
+depends on the value of the exponentiation. The maximum limit of the 
+exponentiation is unity. This condition implies that either ϕ -&gt; 0 or 
+T -&gt; inf. In this case, Eq. 1 becomes</p>
+<blockquote>
+<div>δJ/J = ( (δA/A)**2 + 3*(δT/T)**2 + (δϕ/ϕ)**2 + (δk/k)**2 )**(1/2)</div></blockquote>
+<p>The largest term is the uncertainty in Boltzmann&#8217;s constant. Therefore the 
+uncertainty in output current density is set by the uncertainty in 
+Boltzmann&#8217;s constant.</p>
+<p>The minimum limit of exponentiation is zero. This condition implies that 
+either ϕ -&gt; inf or T -&gt; 0. In this case, Eq. 1 becomes</p>
+<blockquote>
+<div>δJ/J = ( (δA/A)**2 + 2*(δT/T)**2 )**(1/2)</div></blockquote>
+<p>Both the Richardson&#8217;s constant and temperature are assumed to have machine 
+precision, so the uncertainty in the output current is slightly worse than 
+machine precision.</p>
+<p>Since the uncertainty of Boltzmann&#8217;s constant is greater than the 
+uncertainty of 64 bit floats, the output current will have a maximum 
+uncertainty given by the uncertainty of Boltzmann&#8217;s constant.</p>
+<p>[1] <a class="reference external" href="http://physics.nist.gov/cgi-bin/cuu/Value">http://physics.nist.gov/cgi-bin/cuu/Value</a>?tkev|search_for=boltzmann</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_electrode_method.MethodsValues.test_calc_vacuum_energy_values">
+<tt class="descname">test_calc_vacuum_energy_values</tt><big>(</big><big>)</big><a class="headerlink" href="#test_electrode_method.MethodsValues.test_calc_vacuum_energy_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vacuum energy values test.</p>
+<p>This method follows the numerical testing strategy as laid out in the README 
+document. The script</p>
+<blockquote>
+<div>xx.py</div></blockquote>
+<p>was used to generate the standard data which can be found in the 
+corresponding .dat file.</p>
+<p>The uncertainty of this method is ~1e-7.</p>
+<p>The return value of this method is given by a simple sum of terms shown in 
+Eq. 1</p>
+<blockquote>
+<div>Evac = eV + ξ - χ         (1)</div></blockquote>
+<dl class="docutils">
+<dt>Where </dt>
+<dd>e is the fundamental charge
+V is the voltage at which the electrode is held
+ξ is the barrier height
+χ is the negative electron affinity, if one exists</dd>
+</dl>
+<p>It is important to note that the values of ξ and χ have been converted to 
+units of joules from units of electron volts. This conversion was done by 
+multiplying the value in eV by the value of the fundamental charge. I assume 
+that ξ and χ are input to machine precision, but this conversion reduces the 
+precision since there is uncertainty in the value of the electron charge. 
+With this conversion in mind, Eq. 1 is essentially</p>
+<blockquote>
+<div>Evac = e(V + ξ - χ)         (2)</div></blockquote>
+<p>Where V, ξ, and χ are all machine precision. The uncertainty analysis of 
+this case is very simple, boiling down to the product of two uncertainties 
+as</p>
+<blockquote>
+<div>δEvac/Evac = ( (δe/e)**2 + (δV/V)**2 )**(1/2)               (3)</div></blockquote>
+<p>Where I have suppressed the effects of ξ and χ since they don&#8217;t actually 
+make a big difference in the result. The uncertainty in Evac is therefore 
+equal to the uncertainty in e. According to NIST [1], the uncertainty in e 
+is ~1e-7.</p>
+<p>[1] <a class="reference external" href="http://physics.nist.gov/cgi-bin/cuu/Value">http://physics.nist.gov/cgi-bin/cuu/Value</a>?e|search_for=electron+charge</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<span class="target" id="module-test_tec_method"></span><div class="section" id="tecbase">
+<h2>TECBase<a class="headerlink" href="#tecbase" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="test_tec_method.MethodsSpecialCase">
+<em class="property">class </em><tt class="descclassname">test_tec_method.</tt><tt class="descname">MethodsSpecialCase</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#test_tec_method.MethodsSpecialCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests the special cases of the methods.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="test_tec_method.MethodsValues">
+<em class="property">class </em><tt class="descclassname">test_tec_method.</tt><tt class="descname">MethodsValues</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#test_tec_method.MethodsValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests the output of the methods match some expected values.</p>
+<dl class="method">
+<dt id="test_tec_method.MethodsValues.test_calc_back_current_density">
+<tt class="descname">test_calc_back_current_density</tt><big>(</big><big>)</big><a class="headerlink" href="#test_tec_method.MethodsValues.test_calc_back_current_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method has uncertainty equivalent to Electrode.calc_output_current() via an analogous argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_tec_method.MethodsValues.test_calc_contact_potential">
+<tt class="descname">test_calc_contact_potential</tt><big>(</big><big>)</big><a class="headerlink" href="#test_tec_method.MethodsValues.test_calc_contact_potential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contact potential values test.</p>
+<p>This method has machine precision. When the barrier attribute of an Electrode object is set, the quantity is converted from eV to J by multiplying by the value of the fundamental charge. Even though the machine does a machine precision multiplication, the value of  the fundamental charge has a lower relative precision than the mahcine. So there are a bunch of digits that get carried around that are insignificant. However, this calc_contact_potential calculation, the result is divided by the value of the fundamental charge to get the result in V. This division recovers the original precision of  the values of barrier_ht and therefore the result is of machine precision.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_tec_method.MethodsValues.test_calc_forward_current_density">
+<tt class="descname">test_calc_forward_current_density</tt><big>(</big><big>)</big><a class="headerlink" href="#test_tec_method.MethodsValues.test_calc_forward_current_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method has uncertainty equivalent to Electrode.calc_output_current() via an analogous argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_tec_method.MethodsValues.test_calc_interelectrode_spacing">
+<tt class="descname">test_calc_interelectrode_spacing</tt><big>(</big><big>)</big><a class="headerlink" href="#test_tec_method.MethodsValues.test_calc_interelectrode_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interelectrode spacing values test.</p>
+<p>This method has machine precision since it is a difference between to machine precise values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_tec_method.MethodsValues.test_calc_output_current_density">
+<tt class="descname">test_calc_output_current_density</tt><big>(</big><big>)</big><a class="headerlink" href="#test_tec_method.MethodsValues.test_calc_output_current_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mostly this method has relative uncertainty ~1e-5. Exceptions listed below.</p>
+<p>The absolute uncertainty of calc_output_current_density() is given by the larger of calc_forward_current_density() or calc_back_current_density(). Care must be taken when the forward and back currents approach the same value. In this case the output current approaches zero and the uncertainty analysis becomes more nuanced.</p>
+<p>The absolute uncertainty of the output current density can be written</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>δJ = (δJF**2 + δJB**2)**(1/2)</dt>
+<dd>= ( (δJF/JF * JF)**2 + (δJB/JB * JB)**2 )**(1/2)</dd>
+</dl>
+</div></blockquote>
+<p>Since the relative uncertainties of the forward and back current are equal, they can be factored out.</p>
+<blockquote>
+<div>δJ = δJF/JF * (JF**2 + JB**2)**(1/2)</div></blockquote>
+<p>The relative uncertainty of the output current can be obtained by dividing by J, performing some algebra, and expanding.</p>
+<blockquote>
+<div>δJ/J = δJF/JF * ( (JF**2 + JB**2)/(JF-JB)**2 )**(1/2)</div></blockquote>
+<p>In both cases (absolute and relative uncertainty), it is clear that the uncertainty of the output current is roughly the uncertainty of the forward or back current in the event that one is substantially bigger than the other. In almost every interesting case, the forward current will be substantially bigger than the back current and the uncertainty of the output current will essentially equal the uncertainty of the forward current.</p>
+<p>When the forward current and back current approach the same value, the output current approaches zero and the expression for absolute ucertainty should be used to evaluate the uncertainty of the zero.</p>
+<blockquote>
+<div>δJ = δJF/JF * (JF**2 + JB**2)**(1/2)</div></blockquote>
+<p>If the magnitude of JF and JB are large, the precision of the zero of the output current will be poor. For example, say JF and JB are on the order of 1e4 A m^{-2} (1A cm^{-2}). This magnitude is not unreasonable, but in this case at best we can know the zero of the output current to only one decimal point (the relative uncertanty of the forward current is ~1e-5).</p>
+<p>If the magnitude of JF and JB are small, the precision of the zero of the output current will be good. This case is the most liekly. Why is it likely? Its likely because of the current retardation effects either due to the negative space charge effect or due to the vacuum level of the collector reaching a point where forward electrons are blocked.</p>
+<p>A good way to evaluate the worst-case-scenario of the absolute precision of the output current density is to look at the value of the saturation current of hte emitter and collector. The collector value is likely small; this small value is the upper limit and will only decrease due to effects like the negative space charge effect. The point is that this small value represents the upper limit in terms of absolute precision of the output current density.</p>
+<p>We also need to consider the relative uncertainty of the output current density.</p>
+<blockquote>
+<div>δJ/J = δJF/JF * ( (JF**2 + JB**2)/(JF - JB)**2 )**(1/2)</div></blockquote>
+<p>As J approaches zero, this expression blows up. We can determine a ratio of back current to forward current for which the relative uncertanty equal to or greater than unity. In this case, the value of the quantity would be more precise than the uncertanty. We can calculate the forward and back current values that make the relative uncertanty of the output current density greater than unity.</p>
+<blockquote>
+<div>&lt;2012.12.22 p15&gt;</div></blockquote>
+<p>The takeaway from this analysis is that there is a ratio of JB to JF for which the relative uncertainty of the output current density is nonsense. This ratio depends on the relative uncertanty of the forward/back current.</p>
+<p>It bears repeating that for most cases of interest, the output current isn&#8217;t close enough to zero for this detailed analysis to apply. WHen the output current is nearly zero, the absolute precision is taill probably pretty good. There&#8217;s only a very limited set of cases where the output current is nearly zero, the uncertanty is poor, and someone is interested.</p>
+<p>If the user does have an interest in the case where the output current is nearly zero, the user should first evaluate the output current of both electrodes. The smaller of the two fixes the upper limit of the absolute uncertatinty of the output current density. The user should then evaluate the magnitude of the forward or back current density at the potin where the output current is zero. If they are small, the absolute ucertainty of the otuptu current density is small. If not, then the user has a truly spacecial case and should proceed with caution.</p>
+<p>The moral of this story: use care when the output current density is nearly zero.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_tec_method.MethodsValues.test_calc_output_power_density">
+<tt class="descname">test_calc_output_power_density</tt><big>(</big><big>)</big><a class="headerlink" href="#test_tec_method.MethodsValues.test_calc_output_power_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>In most cases, the relative uncertainty of the output power density is 1e-5.</p>
+<p>Care must be taken when the forward and back current densities approach the same value.</p>
+<p>The relative uncertainty of the output power density can be written</p>
+<blockquote>
+<div>δw/w = ( (δJ/J)**2 + (δV/V)**2 )**(1/2)</div></blockquote>
+<p>Substituting the expression for the relative uncertainty of the output current density</p>
+<blockquote>
+<div>δw/w = ( (δJF/JF)**2 * (JF**2 + JB**2)/(JF - JB)**2 + (δV/V)**2 )**(1/2)</div></blockquote>
+<p>From this expression it is clear that the relative uncertainty of the output power density blows up as JF and JB approach the same value. Since the upper limit of the relative uncertainty is unity, we can calculate values of JF and JB for which the relative uncertainty is greater than unity.</p>
+<blockquote>
+<div>&lt;2012.12.24 p2&gt;</div></blockquote>
+<p>The roots of this expression show the ratios of JB/JF for which the relative uncertainty of the output power density makes no sense.</p>
+<p>An expression for the absolute uncertainty of the output power density can be derived from the expression for the relative uncertainty.</p>
+<blockquote>
+<div><p>δw/w = ( (δJF/JF)**2 * (JF**2 + JB**2)/(JF - JB)**2 + (δV/V)**2 )**(1/2)
+δw = w * ( (δJF/JF)**2 * (JF**2 + JB**2)/(JF - JB)**2 + (δV/V)**2 )**(1/2)</p>
+<blockquote>
+<div>= (V**2 * (δJF/JF)**2 * (JF**2 + JB**2) + J**2 * V**2 * (δV/V)**2 )**(1/2)</div></blockquote>
+</div></blockquote>
+<p>Pretty much all the caveats about uncertainty near zero of the output current density apply to this quantity.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="test_tec_method.MethodsValues.test_calc_output_voltage">
+<tt class="descname">test_calc_output_voltage</tt><big>(</big><big>)</big><a class="headerlink" href="#test_tec_method.MethodsValues.test_calc_output_voltage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output voltage values test.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Testing numerical accuracy of models</a><ul>
+<li><a class="reference internal" href="#electrode">Electrode</a></li>
+<li><a class="reference internal" href="#tecbase">TECBase</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="models.html"
+                        title="previous chapter">Models (<tt class="docutils literal docutils literal docutils literal"><span class="pre">tec.models</span></tt>)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/numerics.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Models (tec.models)"
+             >previous</a> |</li>
+        <li><a href="index.html">tec 0.3.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Joshua Ryan Smith.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
