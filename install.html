@@ -57,7 +57,28 @@
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>I need to build an installer.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>First, you will need a working installation of python, <a class="reference external" href="http://www.numpy.org">numpy</a>, <a class="reference external" href="http://www.scipy.org">scipy</a>, and <a class="reference external" href="http://matplotlib.org">matplotlib</a>. I&#8217;m using python 2.7.3, numpy version 1.7.0, scipy version 0.11.0, and matplotlib version 1.2.0. You might as well get <a class="reference external" href="http://ipython.org">ipython</a> (which installs the <a class="reference external" href="http://ipython.org/notebook.html">ipython notebook</a>) while you&#8217;re at it.</p>
+<p>If you are using a mac, I recommend following <a class="reference external" href="http://penandpants.com/2013/04/04/install-scientific-python-on-mac-os-x/">Matt Davis&#8217;s instructions</a> on how to install these packages using <a class="reference external" href="http://brew.sh">homebrew</a>. If you are running linux, try your distro&#8217;s package manager.</p>
+<p>If you are on windows, let me know how you install this stuff because I don&#8217;t have access to a windows box. Hit me up on the <a class="reference external" href="https://github.com/jrsmith3/tec/issues?state=open">issue tracker</a> if you have suggestions for windows.</p>
+</div>
+<div class="section" id="tec-installation">
+<h2>tec installation<a class="headerlink" href="#tec-installation" title="Permalink to this headline">¶</a></h2>
+<p>The code isn&#8217;t on pypi, so you&#8217;ll have to install from source. There are two ways to do it: 1. downloading and installing from the zip file and 2. installing with pip over git from github. If you don&#8217;t understand the phrase, &#8220;installing over git from github&#8221;, you want to use the first option.</p>
+</div>
+<div class="section" id="zip-file-install">
+<h2>Zip file install<a class="headerlink" href="#zip-file-install" title="Permalink to this headline">¶</a></h2>
+<p>All you have to do is download the most recent version (0.3.0) from the internet <a class="reference external" href="https://github.com/jrsmith3/tec/archive/0.3.0.zip">here</a>. Unzip the file and switch into the directory into which the zip file was uncompressed. Then execute the following command at the command line.</p>
+<blockquote>
+<div>$ python setup.py install</div></blockquote>
+</div>
+<div class="section" id="pip-git-github">
+<h2>pip + git + github<a class="headerlink" href="#pip-git-github" title="Permalink to this headline">¶</a></h2>
+<p>If you have pip installed, things should be pretty easy. Just execute</p>
+<blockquote>
+<div>$ pip install git+git://github.com/jrsmith3/tec.git</div></blockquote>
+</div>
 </div>
 
 
@@ -66,6 +87,17 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#tec-installation">tec installation</a></li>
+<li><a class="reference internal" href="#zip-file-install">Zip file install</a></li>
+<li><a class="reference internal" href="#pip-git-github">pip + git + github</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">tec</a></p>
