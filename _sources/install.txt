@@ -14,7 +14,7 @@ The code isn't on pypi, so you'll have to install from source. There are two way
 
 Zip file install
 ................
-All you have to do is download the most recent version (0.3.1) from the internet `here <https://github.com/jrsmith3/tec/archive/0.3.1.zip>`_. Unzip the file and switch into the directory into which the zip file was uncompressed. Then execute the following command at the command line.
+All you have to do is download the most recent version (0.3.2) from the internet `here <https://github.com/jrsmith3/tec/archive/0.3.2.zip>`_. Unzip the file and switch into the directory into which the zip file was uncompressed. Then execute the following command at the command line.
 
     $ python setup.py install
 
